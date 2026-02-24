@@ -1,4 +1,7 @@
 <?php
+
+include 'db.php';
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
@@ -12,17 +15,23 @@ $segments = explode('/', trim($path, '/'));
 
 if ($segments[0] === 'api' && $segments[1] === 'trajets') {
     
-    // GET /api/trajets → Les 5 trajets
+    // GET /api/trajets → TOUS les trajets depuis la BD
     if ($method === 'GET' && count($segments) === 2) {
-        echo json_encode(array_values($trajets));
+        $stmt = $pdo->query("SELECT * FROM trajets ORDER BY id_trajet");
+        $trajets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode(array_values($trajets));  // array_values pour réindexer
         exit;
     }
     
-    // GET /api/trajets/3 → Détail trajet 3
+    // GET /api/trajets/3 → Détail trajet 3 depuis la BD
     elseif ($method === 'GET' && count($segments) === 3) {
         $id = (int)$segments[2];
-        if (isset($trajets[$id])) {
-            echo json_encode($trajets[$id]);
+        $stmt = $pdo->prepare("SELECT * FROM trajets WHERE id_trajet = ?");
+        $stmt->execute([$id]);
+        $trajet = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($trajet) {
+            echo json_encode($trajet);
         } else {
             http_response_code(404);
             echo json_encode(['error' => 'Trajet non trouvé']);
@@ -30,7 +39,7 @@ if ($segments[0] === 'api' && $segments[1] === 'trajets') {
         exit;
     }
     
-    // POST /api/trajets → Simule création (retourne trajet 1)
+    // POST /api/trajets → CRÉATION REELLE dans la BD
     elseif ($method === 'POST' && count($segments) === 2) {
         session_start();
         if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'responsable_agence') {
@@ -38,11 +47,29 @@ if ($segments[0] === 'api' && $segments[1] === 'trajets') {
             echo json_encode(['error' => 'Accès refusé']);
             exit;
         }
-        echo json_encode(['id' => 1, 'message' => 'Trajet créé (mode démo)']);
+        
+        $input = json_decode(file_get_contents('php://input'), true);
+        $stmt = $pdo->prepare("INSERT INTO trajets (ville_depart, destination, date_depart, heure_depart, duree, numero_bus) VALUES (?, ?, ?, ?, ?, ?)");
+        $result = $stmt->execute([
+            $input['ville_depart'] ?? '',
+            $input['destination'] ?? '',
+            $input['date_depart'] ?? '0000-00-00',
+            $input['heure_depart'] ?? '00:00:00',
+            $input['duree'] ?? 0,
+            $input['numero_bus'] ?? 0
+        ]);
+        
+        if ($result) {
+            $newId = $pdo->lastInsertId();
+            echo json_encode(['id' => $newId, 'message' => 'Trajet créé avec succès']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'Erreur création trajet']);
+        }
         exit;
     }
     
-    // PUT /api/trajets/2 → Simule modification
+    // PUT /api/trajets/2 → MODIFICATION REELLE dans la BD
     elseif ($method === 'PUT' && count($segments) === 3) {
         session_start();
         if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'responsable_agence') {
@@ -50,9 +77,23 @@ if ($segments[0] === 'api' && $segments[1] === 'trajets') {
             echo json_encode(['error' => 'Accès refusé']);
             exit;
         }
+        
         $id = (int)$segments[2];
-        if (isset($trajets[$id])) {
-            echo json_encode(['success' => true, 'message' => "Trajet $id modifié (mode démo)"]);
+        $input = json_decode(file_get_contents('php://input'), true);
+        
+        $stmt = $pdo->prepare("UPDATE trajets SET ville_depart=?, destination=?, date_depart=?, heure_depart=?, duree=?, numero_bus=? WHERE id_trajet=?");
+        $result = $stmt->execute([
+            $input['ville_depart'] ?? '',
+            $input['destination'] ?? '',
+            $input['date_depart'] ?? '0000-00-00',
+            $input['heure_depart'] ?? '00:00:00',
+            $input['duree'] ?? 0,
+            $input['numero_bus'] ?? 0,
+            $id
+        ]);
+        
+        if ($stmt->rowCount() > 0) {
+            echo json_encode(['success' => true, 'message' => "Trajet $id modifié"]);
         } else {
             http_response_code(404);
             echo json_encode(['error' => 'Trajet non trouvé']);
@@ -60,7 +101,7 @@ if ($segments[0] === 'api' && $segments[1] === 'trajets') {
         exit;
     }
     
-    // DELETE /api/trajets/4 → Simule suppression
+    // DELETE /api/trajets/4 → SUPPRESSION REELLE dans la BD
     elseif ($method === 'DELETE' && count($segments) === 3) {
         session_start();
         if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'responsable_agence') {
@@ -68,9 +109,13 @@ if ($segments[0] === 'api' && $segments[1] === 'trajets') {
             echo json_encode(['error' => 'Accès refusé']);
             exit;
         }
+        
         $id = (int)$segments[2];
-        if (isset($trajets[$id])) {
-            echo json_encode(['success' => true, 'message' => "Trajet $id supprimé (mode démo)"]);
+        $stmt = $pdo->prepare("DELETE FROM trajets WHERE id_trajet = ?");
+        $stmt->execute([$id]);
+        
+        if ($stmt->rowCount() > 0) {
+            echo json_encode(['success' => true, 'message' => "Trajet $id supprimé"]);
         } else {
             http_response_code(404);
             echo json_encode(['error' => 'Trajet non trouvé']);
