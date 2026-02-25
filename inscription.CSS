@@ -1,0 +1,122 @@
+/* --- MAQUETTE CODE 1 --- */
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    background: #f9f9f9;
+}
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    border-bottom:1px solid #ddd;
+    background: #fff;
+}
+.logo{
+    font-weight:bold;
+    color:#2563eb;
+    font-size:20px;
+    display:flex;
+    align-items:center;
+}
+.logo .icon{
+    width: 40px;
+    height: 40px;
+    background: #4299e1;
+    border-radius: 10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: white;
+    font-weight:bold;
+    font-size:20px;
+    margin-right:10px;
+}
+.nav-links a{
+    text-decoration:none;
+    margin-left:20px;
+    color:#333;
+}
+.btn{
+    padding:8px 15px;
+    border-radius:8px;
+    cursor: pointer;
+    border:none;
+    font-size:14px;
+}
+.btn-outline{
+    border:1px solid #ccc;
+    background: transparent;
+}
+.btn-dark{
+    background:#030426;
+    color:white;
+}
+.container{
+    max-width:500px;
+    margin:40px auto;
+    padding:20px;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+.nav-tabs{
+    display:flex;
+    margin-bottom:20px;
+}
+.nav-tab{
+    flex:1;
+    text-align:center;
+    padding:10px;
+    border-bottom:2px solid transparent;
+    cursor:pointer;
+    font-weight:bold;
+    color:#555;
+}
+.nav-tab.active{
+    border-bottom:2px solid #2563eb;
+    color:#2563eb;
+}
+.form-container{
+    display:none;
+}
+.form-container.active{
+    display:block;
+}
+.form-group{
+    margin-bottom:15px;
+    display:flex;
+    flex-direction:column;
+}
+.form-group label{
+    margin-bottom:5px;
+    font-weight:bold;
+}
+.form-group input{
+    padding:8px;
+    border-radius:5px;
+    border:1px solid #ccc;
+    font-size:14px;
+}
+.password-group{
+    display:flex;
+    gap:10px;
+}
+button.btn{
+    width:100%;
+    background:#030426;
+    color:white;
+    border:none;
+    padding:10px;
+    font-weight:bold;
+}
+.footer-text{
+    margin-top:20px;
+    text-align:center;
+    font-size:14px;
+}
+.footer-text a{
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:bold;
+}
