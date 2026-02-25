@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EASY-travel - Inscription</title>
+<style>
+/* --- MAQUETTE CODE 1 --- */
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    background: #f9f9f9;
+}
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    border-bottom:1px solid #ddd;
+    background: #fff;
+}
+.logo{
+    font-weight:bold;
+    color:#2563eb;
+    font-size:20px;
+    display:flex;
+    align-items:center;
+}
+.logo .icon{
+    width: 40px;
+    height: 40px;
+    background: #4299e1;
+    border-radius: 10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: white;
+    font-weight:bold;
+    font-size:20px;
+    margin-right:10px;
+}
+.nav-links a{
+    text-decoration:none;
+    margin-left:20px;
+    color:#333;
+}
+.btn{
+    padding:8px 15px;
+    border-radius:8px;
+    cursor: pointer;
+    border:none;
+    font-size:14px;
+}
+.btn-outline{
+    border:1px solid #ccc;
+    background: transparent;
+}
+.btn-dark{
+    background:#030426;
+    color:white;
+}
+.container{
+    max-width:500px;
+    margin:40px auto;
+    padding:20px;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+.nav-tabs{
+    display:flex;
+    margin-bottom:20px;
+}
+.nav-tab{
+    flex:1;
+    text-align:center;
+    padding:10px;
+    border-bottom:2px solid transparent;
+    cursor:pointer;
+    font-weight:bold;
+    color:#555;
+}
+.nav-tab.active{
+    border-bottom:2px solid #2563eb;
+    color:#2563eb;
+}
+.form-container{
+    display:none;
+}
+.form-container.active{
+    display:block;
+}
+.form-group{
+    margin-bottom:15px;
+    display:flex;
+    flex-direction:column;
+}
+.form-group label{
+    margin-bottom:5px;
+    font-weight:bold;
+}
+.form-group input{
+    padding:8px;
+    border-radius:5px;
+    border:1px solid #ccc;
+    font-size:14px;
+}
+.password-group{
+    display:flex;
+    gap:10px;
+}
+button.btn{
+    width:100%;
+    background:#030426;
+    color:white;
+    border:none;
+    padding:10px;
+    font-weight:bold;
+}
+.footer-text{
+    margin-top:20px;
+    text-align:center;
+    font-size:14px;
+}
+.footer-text a{
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION (CODE 1) -->
+<nav>
+    <div class="logo">
+        <div class="icon">🛫</div>
+        EASY-travel
+    </div>
+    <div class="nav-links">
+        <a href="#">Accueil</a>
+        <a href="#">Rechercher</a>
+        <a href="connexion.html" class="btn btn-outline">Connexion</a>
+        <a href="#" class="btn btn-dark">S'inscrire</a>
+    </div>
+</nav>
+
+<!-- CONTENU DE LA PAGE INSCRIPTION -->
+<div class="container">
+    <div class="nav-tabs">
+        <div class="nav-tab active" onclick="switchTab('client')">Client</div>
+        <div class="nav-tab" onclick="switchTab('agence')">Agence</div>
+    </div>
+    
+    <!-- Formulaire Inscription Client -->
+    <div id="client-form" class="form-container active">
+        <h2 style="margin-bottom: 20px; color: #2d3748; font-size: 24px;">Inscription Client</h2>
+        <form>
+            <!-- NOM ET PRÉNOM -->
+            <div class="password-group">
+                <div class="form-group" style="flex: 1;">
+                    <label>Nom</label>
+                    <input type="text" placeholder="Votre nom" required>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Prénom</label>
+                    <input type="text" placeholder="Votre prénom" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="votre@email.com" required>
+            </div>
+            <div class="form-group">
+                <label>Téléphone</label>
+                <input type="tel" placeholder="+225 00 00 00 00" required>
+            </div>
+            <div class="password-group">
+                <div class="form-group" style="flex: 1;">
+                    <label>Mot de passe</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Confirmer</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+            </div>
+            <button type="submit" class="btn">Créer mon compte</button>
+        </form>
+    </div>
+    
+    <!-- Formulaire Inscription Agence -->
+    <div id="agence-form" class="form-container">
+        <h2 style="margin-bottom: 20px; color: #2d3748; font-size: 24px;">Inscription Agence</h2>
+        <form>
+            <div class="form-group">
+                <label>Nom de l'agence</label>
+                <input type="text" placeholder="Nom de votre agence" required>
+            </div>
+            <div class="form-group">
+                <label>Responsable</label>
+                <input type="text" placeholder="Nom du responsable" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="agence@email.com" required>
+            </div>
+            <div class="form-group">
+                <label>Téléphone</label>
+                <input type="tel" placeholder="+225 00 00 00 00" required>
+            </div>
+            <div class="password-group">
+                <div class="form-group" style="flex: 1;">
+                    <label>Mot de passe</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Confirmer</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+            </div>
+            <button type="submit" class="btn">Créer compte agence</button>
+        </form>
+    </div>
+    
+    <div class="footer-text">
+        Déjà un compte ? <a href="connexion.html">Se connecter</a>
+    </div>
+</div>
+
+<script>
+function switchTab(tab) {
+    document.querySelectorAll('.form-container').forEach(form => {
+        form.classList.remove('active');
+    });
+    document.querySelectorAll('.nav-tab').forEach(tabEl => {
+        tabEl.classList.remove('active');
+    });
+    
+    document.getElementById(tab + '-form').classList.add('active');
+    event.target.classList.add('active');
+}
+
+document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Inscription en cours... (Intégrez votre logique backend ici)');
+    });
+});
+</script>
+</body>
+</html>
