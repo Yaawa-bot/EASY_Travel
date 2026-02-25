@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EASYtravel - Connexion</title>
+    <link rel="stylesheet" href="connexion.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div style="width: 40px; height: 40px; background: #4299e1; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px;">🛫</div>
+            <span class="logo-text">EASYtravel</span>
+        </div>
+        
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="switchTab('client')">Client</div>
+            <div class="nav-tab" onclick="switchTab('agence')">Agence</div>
+        </div>
+        
+        <!-- Formulaire Client -->
+        <div id="client-form" class="form-container active">
+            <h2 style="margin-bottom: 20px; color: #2d3748; font-size: 24px;">Connexion EASYtravel</h2>
+            <form>
+                <div class="form-group">
+                    <label>Utilisateur</label>
+                    <input type="text" placeholder="Votre nom d'utilisateur" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="votre@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn">Se connecter</button>
+            </form>
+        </div>
+        
+        <!-- Formulaire Agence -->
+        <div id="agence-form" class="form-container">
+            <h2 style="margin-bottom: 20px; color: #2d3748; font-size: 24px;">Connexion Agence</h2>
+            <form>
+                <div class="form-group">
+                    <label>Agence</label>
+                    <input type="text" placeholder="Nom de votre agence" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="agence@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn">Se connecter</button>
+            </form>
+        </div>
+        
+        <!-- LIEN MODIFIÉ : pointe maintenant vers inscription.html -->
+        <div class="footer-text">
+            Pas de compte ? <a href="inscription.html" style="color: #4299e1;">Créer un compte</a>
+        </div>
+    </div>
+    
+    <script>
+        function switchTab(tab) {
+            // Masquer tous les formulaires
+            document.querySelectorAll('.form-container').forEach(form => {
+                form.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tabEl => {
+                tabEl.classList.remove('active');
+            });
+            
+            // Activer le bon formulaire et onglet
+            document.getElementById(tab + '-form').classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // Gestion des formulaires (à adapter avec votre backend)
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Connexion en cours... (Intégrez votre logique backend ici)');
+            });
+        });
+    </script>
+</body>
+</html>
